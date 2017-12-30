@@ -1,4 +1,3 @@
-
 function PlotSolution(tour,model)
 
     tour=[tour tour(1)];

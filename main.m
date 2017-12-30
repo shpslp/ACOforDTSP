@@ -11,9 +11,9 @@ model=CreateModel(fix,N);
 
 %% ACO Parameters
 
-par.MaxIt=700;      % Maximum Number of Iterations
+par.MaxIt=300;      % Maximum Number of Iterations
 
-par.nAnt=60;        % Number of Ants (Population Size)
+par.nAnt=50;        % Number of Ants (Population Size)
 
 par.aL = mean(model.D(2:end,1))*1.2;      % average of length per 1 package [m] (this value also means probability weighting of cost function)
 
@@ -41,8 +41,12 @@ for i=1:2
     [BestSol HP_Log BestCost] = acoCalc(par, model);%#ok
     if Dyn(i)==0
         StaCost=BestCost;
+        StaHP_Log=HP_Log;
+        StaBestSol=BestSol;
     elseif Dyn(i)==1
         DynCost=BestCost;
+        DynHP_Log=HP_Log;
+        DynBestSol=BestSol;
     end
     %% Plot The Results
 %     PlotTimeVaring(BestSol,model,HP_Log,par.Dyn)
@@ -55,3 +59,18 @@ for i=1:2
     pause(1)
 end
 PlotCompare(DynCost,StaCost,HPTour,par.aL,model)
+
+%% Plot the GPS Skip Tour
+RealTour.Sta = SkipTour(StaBestSol,HPTour.Sta);
+RealTour.Dyn = SkipTour(DynBestSol,HPTour.Sta);
+PlotSkipSolution(StaBestSol,DynBestSol,RealTour,model)
+
+for i=1:500
+RealTour.Sta = SkipTour(StaBestSol,HPTour.Sta);
+Cost.Sta = CostFunction(StaHP_Log,RealTour.Sta,model,par.aL,1);
+RealTour.Dyn = SkipTour(DynBestSol,HPTour.Sta);
+Cost.Dyn = CostFunction(DynHP_Log,RealTour.Dyn,model,par.aL,1);
+h(1,i)=Cost.Dyn/Cost.Sta;
+end
+figure
+hist=histogram(h)
