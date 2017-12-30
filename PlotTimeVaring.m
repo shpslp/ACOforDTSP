@@ -1,5 +1,5 @@
 function PlotTimeVaring(BestSol,model,HP_Log,Dyn)
-    figure('Position', [200 200 640 480])
+    figure('Position', [720 0 480 360])
     nVar = model.n;
     Weight = [];
     Tour = BestSol.Tour;
@@ -35,11 +35,10 @@ function PlotTimeVaring(BestSol,model,HP_Log,Dyn)
     for i=1:nVar
         [A,map] = rgb2ind(im{i},256);
         if i==1
-            imwrite(A,map,filename,'gif','LoopCount',Inf,'DelayTime',0.2);
+            imwrite(A,map,fullfile('./output',filename),'gif','LoopCount',Inf,'DelayTime',0.2);
         else
-            imwrite(A,map,filename,'gif','WriteMode','append','DelayTime',0.2);
+            imwrite(A,map,fullfile('./output',filename),'gif','WriteMode','append','DelayTime',0.2);
         end
     end
-
 
 end

@@ -1,26 +1,11 @@
-%
-% Copyright (c) 2015, Yarpiz (www.yarpiz.com)
-% All rights reserved. Please read the "license.txt" for license terms.
-%
-% Project Code: YOEA103
-% Project Title: Ant Colony Optimization for Traveling Salesman Problem
-% Publisher: Yarpiz (www.yarpiz.com)
-% 
-% Developer: S. Mostapha Kalami Heris (Member of Yarpiz Team)
-% 
-% Contact Info: sm.kalami@gmail.com, info@yarpiz.com
-%
 
-function model=CreateModel()
+function model=CreateModel(fix,N)
+if fix == 0
+%% Geomatric Data
 
-    addpath('./pseudo_data');
-    data=load('data.dat'); %pseudo_data/
-    offset = 0.01;
-
-    x=[82 91 92 63  9 28 55 96 97 98 96 49 80 14 42 92 80 43 64 67 56 74 56 31  7  4 98 35 71];
-    
-    y=[66  3 94 68 76 75 39 66 17  3 27  4  9 83 70 32 95  7 43 12 47 60 98 36  2 46 50 52 34];
-    
+    georand = randi(2000,2,N);
+    x=georand(1,1:N);
+    y=georand(2,1:N);
     n=numel(x);
     
     D=zeros(n,n);
@@ -34,11 +19,42 @@ function model=CreateModel()
             
         end
     end
+
+%% Home-Probability Data
     
+    WorkerData    = [12 10 6  5 4 3 2 2 3 5  9 19 37 50 55 45 34 25 22 18 16 14 14 15 21 20 18 16 15 15 15 16 18 20 23 30 38 47 54 59 63 67 70 70 65 60 42 29];
+    HousewifeData = [8  7  4  3 2 2 2 2 2 4 11 27 49 69 83 87 87 84 77 71 60 57 56 58 70 72 68 64 59 61 64 62 64 67 77 83 84 87 90 90 87 88 86 85 69 67 44 27];
+    NeetData      = [8  5  3  3 2 1 3 2 4 7 14 22 40 56 70 76 79 74 68 64 60 55 59 63 72 73 65 61 56 57 60 60 66 71 78 83 86 88 88 88 86 84 69 63 49 38 21 13];
+    
+%     make time series with random noise, random people selection and random +-1 hour offset around 9:00~22:00
+
+    WD =@(k) WorkerData(18+k:44+k)/100;
+    HD =@(k) HousewifeData(18+k:44+k)/100;
+    ND =@(k) NeetData(18+k:44+k)/100;
+    Data =@(k) [WD(k); HD(k); ND(k)];
+    
+    ind=randi(3,n,1);
+    offset=randi(9,n,1)-5;
+    gain = 0.9+0.2*rand(n,numel(WD));
+    for i=1:n
+        tmp1=Data(offset(i));
+        tmp2=tmp1(ind(i),:);
+        HomeProb(i,:)=tmp2.*gain(i,:);
+    end
+    %     save workspace
+    save('./input/input.mat','n','x','y','D','HomeProb');
+    
+else
+    
+    load('./input/input.mat','n','x','y','D','HomeProb')
+end
+    
+  
+  % set each value in structure  
     model.n=n;
     model.x=x;
     model.y=y;
     model.D=D;
-    model.P=data + offset;
+    model.P=HomeProb';
 
 end

@@ -1,11 +1,11 @@
 function [BestSol HP_Log BestCost] = acoCalc(par, model)%#ok
 %% Initialization
 
-eta=1./model.D;     %#ok        % Heuristic Information Matrix
+eta=1./model.D;                   % Heuristic Information Matrix
 
 nVar = model.n;
 tau0=10*par.Q/(nVar*mean(model.D(:)));	% Initial Phromone
-tau=tau0*ones(nVar,nVar);   %#ok % Phromone Matrix
+tau=tau0*ones(nVar,nVar);         % Phromone Matrix
 
 BestCost.C=zeros(par.MaxIt,1);    % Array to Hold Best Cost Values
 BestCost.L=zeros(par.MaxIt,1);
@@ -47,7 +47,7 @@ for it=1:MaxIt
             i=ant(k).Tour(end);
             
             % Get log of visited time and visited time home-probablity 
-            [T_Log HP_Log] = TourLog(ant(k).Tour,model,v); %#ok
+            HP_Log = TourLog(ant(k).Tour,model,v); 
             
             % Decision Making Process
             P=tau(i,:).^alpha.*eta(i,:).^beta.* HP_Log(end,:).^(Dyn*gamma);
@@ -101,11 +101,19 @@ for it=1:MaxIt
     BestCost.D(it)=BestSol.Dcost;
     
     % Show Iteration Information
-    disp(['Iteration ' num2str(it) ':Length Cost = ' num2str(BestCost.L(it)) ': Best Cost = ' num2str(BestCost.C(it))]);
+    disp(['Iteration ' num2str(it) ': Length Cost = ' num2str(BestCost.L(it)) ': Best Cost = ' num2str(BestCost.C(it))]);
     
     % Plot Solution
     figure(1);
     PlotSolution(BestSol.Tour,model);
     pause(0.01);
+end
+close all;
+figure('Position', [720 480 480 360]);
+PlotSolution(BestSol.Tour,model);
+if Dyn==0
+    saveas(gcf,[pwd '/output/Tour_Static.png'])
+elseif Dyn==1
+    saveas(gcf,[pwd '/output/Tour_Dynamic.png'])
 end
 end
