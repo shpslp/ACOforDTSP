@@ -32,8 +32,13 @@ if fix == 0
     HD =@(k) HousewifeData(18+k:44+k)/100;
     ND =@(k) NeetData(18+k:44+k)/100;
     Data =@(k) [WD(k); HD(k); ND(k)];
+     %rate of job
+    NWD=56;
+    NHD=13;
+    NND=16;
+    Data =@(k) [repmat(WD(k),NWD,1); repmat(HD(k),NHD,1); repmat(ND(k),NND,1)];
     
-    ind=randi(3,n,1);
+    ind=randi(NWD+NHD+NND,n,1);  
     offset=randi(9,n,1)-5;
     gain = 0.9+0.2*rand(n,numel(WD));
     for i=1:n
