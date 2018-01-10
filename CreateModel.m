@@ -3,7 +3,7 @@ function model=CreateModel(fix,N)
 if fix == 0
 %% Geomatric Data
 
-    georand = randi(2000,2,N);
+    georand = randi(100000,2,N);
     x=georand(1,1:N);
     y=georand(2,1:N);
     n=numel(x);
