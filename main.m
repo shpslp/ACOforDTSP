@@ -4,7 +4,7 @@ close all;
 tic;
 
 %% Problem Definition
-N=150;   % Number of House
+N=20;   % Number of House
 fix=0;  % 0/1 value. 0: generate random structure with N. 1: Use Previous Setting.
 
 model=CreateModel(fix,N);
@@ -12,9 +12,9 @@ model=CreateModel(fix,N);
 
 %% ACO Parameters
 
-par.MaxIt=1000;      % Maximum Number of Iterations
+par.MaxIt=200;      % Maximum Number of Iterations
 
-par.nAnt=100;        % Number of Ants (Population Size)
+par.nAnt=50;        % Number of Ants (Population Size)
 
 par.aL = mean(model.D(2:end,1));      % average of length per 1 package [m] (this value also means probability weighting of cost function)
 
