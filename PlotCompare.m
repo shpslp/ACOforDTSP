@@ -31,7 +31,9 @@ a4=subplot(2,2,4);
 hold on;
 plot(sort(HPTour.Dyn,'descend'),'LineWidth',2);
 plot(sort(HPTour.Sta,'descend'),'LineWidth',2);
-title('Home-Probability')
+title({'Home-Probability';...
+    strcat(' Dynamic Success Rate: ',num2str(sum(HPTour.Dyn/model.n)));...
+    strcat(' Static Success Rate: ',num2str(sum(HPTour.Sta/model.n)))})
 xlabel(a4,'House Number Sorted in Descent')
 ylabel(a4,'Probability')
 legend('Dynamic','Static')

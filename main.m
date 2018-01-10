@@ -4,7 +4,7 @@ close all;
 tic;
 
 %% Problem Definition
-N=30;   % Number of House
+N=80;   % Number of House
 fix=0;  % 0/1 value. 0: generate random structure with N. 1: Use Previous Setting.
 
 model=CreateModel(fix,N);
@@ -12,7 +12,7 @@ model=CreateModel(fix,N);
 
 %% ACO Parameters
 
-par.MaxIt=300;      % Maximum Number of Iterations
+par.MaxIt=800;      % Maximum Number of Iterations
 
 par.nAnt=50;        % Number of Ants (Population Size)
 
@@ -29,7 +29,7 @@ par.gamma=1/4;        % Priori Probability Weight
 par.rho=0.1;       % Evaporation Rate
 
 step=numel(model.P(:,1));
-L=0.4*par.aL*model.n;
+L=0.5*par.aL*model.n;
 par.v=L/step;           % Vehicle Average Velocity [m/min] (For considering simulation time cost, we don't use real value, but we define this velocity to deliver the final package at 22:00)
 
 
@@ -66,6 +66,6 @@ RealTour.Sta = SkipTour(StaBestSol,HPTour.Sta);
 RealTour.Dyn = SkipTour(DynBestSol,HPTour.Dyn);
 PlotSkipSolution(StaBestSol,DynBestSol,RealTour,model)
 
-PlotHistogram(StaBestSol,DynBestSol,HPTour,model,par.aL,N)
+PlotHistogram(StaBestSol,DynBestSol,HPTour,model,par.aL)
 
 toc;

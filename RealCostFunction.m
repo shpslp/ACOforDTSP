@@ -1,5 +1,5 @@
-function cost = RealCostFunction(tour,model,aL,N)
+function cost = RealCostFunction(tour,model,aL)
 
-    cost = TourLength(tour,model) + aL*(N-numel(tour));
+    cost = TourLength(tour,model) + aL*(model.n-numel(tour));
 
 end

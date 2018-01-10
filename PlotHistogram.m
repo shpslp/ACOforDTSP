@@ -1,4 +1,4 @@
-function PlotHistogram(StaBestSol,DynBestSol,HPTour,model,aL,N)
+function PlotHistogram(StaBestSol,DynBestSol,HPTour,model,aL)
 for i=1:2000
 RealTour.Sta = SkipTour(StaBestSol,HPTour.Sta);
 Cost.Sta = TourLength(RealTour.Sta,model);
@@ -57,19 +57,17 @@ saveas(gcf,[pwd '/output/CompareHistogram.png'])
 %% 
 for i=1:2000
 RealTour.Sta = SkipTour(StaBestSol,HPTour.Sta);
-Cost.Sta = RealCostFunction(RealTour.Sta,model,aL,N);
+Cost.Sta = RealCostFunction(RealTour.Sta,model,aL);
 RealTour.Dyn = SkipTour(DynBestSol,HPTour.Sta);
-Cost.Dyn = RealCostFunction(RealTour.Dyn,model,aL,N);
+Cost.Dyn = RealCostFunction(RealTour.Dyn,model,aL);
 h(1,i)=Cost.Dyn/Cost.Sta;
 end
 M=mean(h);
 V=var(h);
 S=skewness(h);
-disp(M);
-disp(V);
-disp(S);
 figure
 hist = histogram(h);
+title({'Ratio  Dynamic/Static Cost ';strcat('Mean: ',num2str(M),' Variance: ',num2str(V),' Skewness: ',num2str(S))})
 hist.Normalization = 'probability';
 
 
