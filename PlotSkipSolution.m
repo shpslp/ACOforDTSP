@@ -1,29 +1,29 @@
 function PlotSkipSolution(StaBestSol,DynBestSol,RealTour,model)
 figure('Position',[240 0 480*2 360*2])
-a1=subplot(2,2,1);
-subplot(2,2,1)
+
+a1=subplot(2,4,1:2);
+hold on
 PlotSolution(StaBestSol.Tour,model);
-title('All Tour Static')
-xlabel(a1,'x')
-ylabel(a1,'y')
+PlotSolution_g(RealTour.Sta,model);
+title({'All Tour Static';...
+    ['Visited number: ',num2str(numel(RealTour.Sta)),'/',num2str(numel(StaBestSol.Tour))];...
+    ['Tour Length: ',num2str(TourLength(StaBestSol.Tour,model))]})
 
-a2=subplot(2,2,2);
+a2=subplot(2,4,3:4);
+hold on
 PlotSolution(DynBestSol.Tour,model);
-title('All Tour Dynamic')
-xlabel(a2,'x')
-ylabel(a2,'y')
+PlotSolution_g(RealTour.Dyn,model);
+title({'All Tour Dynamic';...
+    ['Visited number',num2str(numel(RealTour.Dyn)),'/',num2str(numel(DynBestSol.Tour))];...
+    ['Tour Length: ',num2str(TourLength(DynBestSol.Tour,model))]})
 
-a3=subplot(2,2,3);
-PlotSolution(RealTour.Sta,model);
-title(['Skip Tour Static -- Visited Number', num2str(numel(RealTour.Sta))])
-xlabel(a3,'x')
-ylabel(a3,'y')
-
-a4=subplot(2,2,4);
+a3=subplot(2,4,6:7);
+hold on
 PlotSolution(RealTour.Dyn,model);
-title(['Skip Tour Dynamic -- Visited Number: ', num2str(numel(RealTour.Dyn))])
-xlabel(a4,'x')
-ylabel(a4,'y')
+PlotSolution_g(RealTour.Dyn,model);
+title({'Skip Tour Dynamic';...
+    ['Visited Number: ', num2str(numel(RealTour.Dyn)),'/',num2str(numel(RealTour.Dyn))];...
+    ['Tour Length: ',num2str(TourLength(RealTour.Dyn,model))]})
 
 saveas(gcf,[pwd '/output/CompareSkipSolution.png'])
 end
