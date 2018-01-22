@@ -4,7 +4,7 @@ close all;
 tic;
 
 %% Problem Definition
-N=80;   % Number of House
+N=30;   % Number of House
 fix=0;  % 0/1 value. 0: generate random structure with N. 1: Use Previous Setting.
 
 model=CreateModel(fix,N);
@@ -12,7 +12,7 @@ model=CreateModel(fix,N);
 
 %% ACO Parameters
 
-par.MaxIt=800;      % Maximum Number of Iterations
+par.MaxIt=300;      % Maximum Number of Iterations
 
 par.nAnt=50;        % Number of Ants (Population Size)
 

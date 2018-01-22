@@ -1,5 +1,5 @@
 function PlotHistogram(StaBestSol,DynBestSol,HPTour,model,aL)
-it=2000
+it=10000;
 for i=1:it
 RealTour.Sta = SkipTour(StaBestSol,HPTour.Sta);
 Cost.Sta = TourLength(RealTour.Sta,model);
@@ -25,7 +25,7 @@ figure('Position',[180 0 480*2 540*2])
 
 f3=subplot(2,3,2);
 % hist1=histogram(h1);
-bar(StaBestSol.Lcost,200,1000);
+bar(StaBestSol.Lcost,800,1000);
 hold on
 hist2=histogram(h2);
 title('Compare Length Histogram')
