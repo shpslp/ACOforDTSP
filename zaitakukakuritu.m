@@ -21,11 +21,11 @@ SAVE = 1;
 
 %% データ読み込み ＆ 曜日ごとの平均
 time = 0:0.5:23.5;  %時刻列
-Yusyokusya = textread(['Yusyokusya.txt']);
+Yusyokusya = textread('Yusyokusya.txt');
 meanY = mean([Yusyokusya Yusyokusya]);
-Syuhu = textread(['Syuhu.txt']);
+Syuhu = textread('Syuhu.txt');
 meanS = mean([Syuhu Syuhu]);
-Musyoku = textread(['Musyoku.txt']);
+Musyoku = textread('Musyoku.txt');
 meanM = mean([Musyoku Musyoku]);
 
 %% プロット
@@ -48,9 +48,9 @@ S_n1 = ones(num,1)*meanS + Ry_S;
 M_n1 = ones(num,1)*meanM + Ry_M;
 
 % 0以下の値は強制的に0にする（保険）（ノイズ量10%未満なら100%は超えないので無視）
-Y_n2 = Y_n1.*(Y_n1>0)+0.01;
-S_n2 = S_n1.*(S_n1>0)+0.01;
-M_n2 = M_n1.*(M_n1>0)+0.01;
+Y_n2 = Y_n1.*(Y_n1>0);
+S_n2 = S_n1.*(S_n1>0);
+M_n2 = M_n1.*(M_n1>0);
 
 if(graph == 1)
     figure()
@@ -115,9 +115,9 @@ end
 %% データの保存
 %保存先は読み込みしたフォルダと同じ
 if(SAVE==1)
-    save(['P_Yusyokusya.mat']);
-    save(['P_Syuhu.mat']);
-    save(['P_Musyoku.mat']); 
+    save('P_Yusyokusya.mat');
+    save('P_Syuhu.mat');
+    save('P_Musyoku.mat'); 
 end
 
 %% 配列まとめる

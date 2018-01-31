@@ -21,13 +21,13 @@ if fix == 0
     end
 
 %% Home-Probability Data
-    HomeProb = zaitakukakuritu(N,4,3)
+    HomeProb = zaitakukakuritu(N,4,3);
 
-    %     save workspace
+    % save workspace
     save('./input/input.mat','n','x','y','D','HomeProb');
     
 else
-    
+    % load workspace
     load('./input/input.mat','n','x','y','D','HomeProb')
 end
     
